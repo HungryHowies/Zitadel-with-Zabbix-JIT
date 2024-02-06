@@ -1,5 +1,10 @@
 # Zitadel-with-Zabbix-JIT-(Just-In-Time)
 
+
+Overview:
+
+This documentation shows How-To setup Zitadel and Zabbix for JIT (Just in Time). This is a basic demonstration of settings that are needed. More settings could be configured for a Production environment.
+
 Prerequisite:
   * Latest Version of Zabbix Server with HTTPS
   * Zitadel-2.42.11 Self-Hosting with HTTPS
@@ -10,21 +15,16 @@ Prerequisite:
 
 Log into Zitadel instance.
 
-Click "Create New Project" and call it Zabbix, Click continue.
+Navigate to Organization ---> Projects.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/27e8b94a-6de5-403d-992f-d0fb5c786b1f)
-
+Click "Create New Project" and set the project name, Click continue.
 
 Under Application click "New".
 
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/c9490992-c424-4fba-8a1e-38c40e9feae0)
+Name the Application, choose the SAML Application (zabbix). Click continue.
 
-
-Name it Zabbix then click SAML Application. Click continue.
-
-
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/a1cdba83-7270-4072-aa8b-5deb10d4c4c5)
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/dd0b4fc2-2b6b-4b32-94e2-db4c2ab9024a)
 
 
 Click the Application called Zabbix.
@@ -34,17 +34,15 @@ Click the Application called Zabbix.
 
 # Create a XML file.
 
-Open a text file and place the following in it,
 NOTE: The key points for the XML file are:
 
-```
-entityID="zabbix"
-oasis:names:tc:SAML:2.0:attrname-format:basic (NameIDFormat)
-Location="https://zabbix.domain.com/index.php" (SingleLogoutService)
-Location="https://zabbix.domain.com/index_sso.php?acs (AssertionConsumerService)
-```
 
-NOTE: Replace domain.com with your Zabbix instance.
+* entityID="zabbix"
+* oasis:names:tc:SAML:2.0:attrname-format:basic (NameIDFormat)
+* Location="https://zabbix.domain.com/index.php" (SingleLogoutService)
+* Location="https://zabbix.domain.com/index_sso.php?acs (AssertionConsumerService)
+
+Open a text file and place the following in it, The example below replace domain.com with your Zabbix instance.
 
 ```
 <?xml version="1.0"?>
@@ -69,17 +67,11 @@ Upload XML file for zabbix.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/34f3abb4-a366-4dc5-bb81-ef145bd59f14)
 
-The XML configuration should be shown below.
-
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/cdea85f6-2d27-480b-b6e8-07036eb81979)
-
-
 Click save.
 
 Under the Zabbix Application, click the tic box called "Assert Roles on Authentication" and "Check
 for Project on Authentication".
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/2fba50d0-980d-4f3c-bbbb-f206d49b62a7)
 
 Using the end point /saml/v2/metadata/ and place it on the end of Zitadel server name.
 Example: 
@@ -87,13 +79,13 @@ Example:
 ```
 https://zitadel.com/saml/v2/metadata.
 ```
-The certificate needed is  the third one from the top.
+Copy the certificate from the /saml/v2/metadata/. In this example I used the third one from the top.
 
 # Zabbix Setup
 
-Copy the certificate from Zitadel and place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
+Once the certificate is copied from Zitadel, then place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
 
-Add the following  in idp.crt file.
+ensure the following configuration is in idp.crt file.
 
 ``` -----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- ```
 
@@ -112,8 +104,8 @@ vi /etc/zabbix/web/zabbix.conf.php
 I used certificates created from Lets encrypt (In my testing phase) for Zabbix php file. Bottom of the file,
 uncomment the last 4 lines and add the full path to all three certificates.
 
-All three certificates can be in the directory /etc/zabbix/web/ so long as the full path is configured
-and Zabbix can access them, any directory would work.
+All three certificates can be in the directory /etc/zabbix/web/. Any directory would work, so long as the full path is configured
+and Zabbix has access to the certificates.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/c14a0faa-0e8f-48b8-8fa3-4c4c2703562b)
 
@@ -133,20 +125,16 @@ $SSO['SETTINGS'] = [];
 
 Login Zabbix  Web UI and navigate to Users --> Authentication.
 
-Under Authentication section, disable "Deprovisioned users group".
+The Authentication section, disable "Deprovisioned users group".
 
-
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/bfa6af08-dd48-4e0d-949d-7fbfd02b31a3)
-
-
-Under the SAML settings, click the following tic boxes.
+Click the "SAML settings",then enable following tic boxes.
 
 ```
 Enable SAML authentication
 Enable JIT provisioning
 ```
 
-The following SAML Settings needs to be configured.
+Configure the following settings section.
 
 ```
 IdP entity ID: https://zitadel-build.domain.com/saml/v2/metadata
@@ -156,8 +144,9 @@ Username attribute: UserName
 SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic ( Matches Zitadel XML)
 ```
 
-Click the tic box Configure JIT provisioning.
-Edit these settings.
+Click the tic box "Configure JIT provisioning".
+
+Edit these settings as shown.
 
 ```
 Group name attribute: groups
@@ -169,21 +158,30 @@ User last name attribute: lastName
 
 # User group mapping.
 
-I used a wildcard in place of the User Group Mapping.
+I used a wildcard in place of the User Group Mapping. At this point I havent found a way to add group/s to Zitadel to match this setting.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/1b096739-2a58-489e-a2d1-805d5877572c)
+Click the Add button under "User group mapping". The following example of these settings are shown below.
 
+```
+SAML group pattern: *
+User groups: Zabbix administrators
+User role: Super admin role
+```
 
-Enable SCIM provisioning.
+Click "Add" to save settings.
+
+Ensure the tic box is enabled for SCIM provisioning.
 
 The full SAML settings configuration as shown below.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/b6a976a5-7e1f-40db-90a5-4eb7abec8dca)
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/65909247-2e64-49c2-9af7-c261e306ad75)
 
 
-You ushould see  the link to SSO.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/0dbae658-59e9-4f39-8748-fe145b2a20ab)
+You should see the link to SSO.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/b13bdd51-d72a-438e-a566-7643581f3567)
+
 
 
 
