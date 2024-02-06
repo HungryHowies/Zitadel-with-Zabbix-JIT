@@ -69,6 +69,7 @@ The XML configuration should be shown below.
 
 Click save.
 
+# Zabbix Setup
 Under the Zabbix Application, click the tic box called "Assert Roles on Authentication" and "Check
 for Project on Authentication".
 
