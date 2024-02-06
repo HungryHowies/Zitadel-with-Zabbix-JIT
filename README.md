@@ -69,7 +69,6 @@ The XML configuration should be shown below.
 
 Click save.
 
-# Zabbix Setup
 Under the Zabbix Application, click the tic box called "Assert Roles on Authentication" and "Check
 for Project on Authentication".
 
@@ -82,6 +81,8 @@ Example:
 https://zitadel.com/saml/v2/metadata.
 ```
 The certificate needed is  the third one from the top.
+
+# Zabbix Setup
 
 Copy the certificate and place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
 
