@@ -14,15 +14,21 @@ Click "Create New Project" and call it Zabbix, Click continue.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/27e8b94a-6de5-403d-992f-d0fb5c786b1f)
 
+
 Under Application click "New".
+
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/c9490992-c424-4fba-8a1e-38c40e9feae0)
 
+
 Name it Zabbix then click SAML Application. Click continue.
+
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/a1cdba83-7270-4072-aa8b-5deb10d4c4c5)
 
+
 Click the Application called Zabbix.
+
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/224eab2c-4aa2-46da-88db-5e46109b60ea)
 
