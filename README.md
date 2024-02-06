@@ -116,7 +116,9 @@ $SSO['SETTINGS'] = [];
 # Zabbix Web UI
 
 Login Zabbix  Web UI and navigate to Users --> Authentication.
-In the Right pane Disable "Deprovisioned users group"
+
+In the Right paine Disable "Deprovisioned users group"
+
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/bfa6af08-dd48-4e0d-949d-7fbfd02b31a3)
 
