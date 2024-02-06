@@ -139,7 +139,7 @@ Under Authentication section, disable "Deprovisioned users group".
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/bfa6af08-dd48-4e0d-949d-7fbfd02b31a3)
 
 
-Under the SAML settings, click the following tic boxes
+Under the SAML settings, click the following tic boxes.
 
 ```
 Enable SAML authentication
@@ -167,14 +167,14 @@ User last name attribute: lastName
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/0012bde0-3bb3-4ced-92d3-e4b9b124194f)
 
-# User group mapping
+# User group mapping.
 
 I used a wildcard in place of the User Group Mapping.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/1b096739-2a58-489e-a2d1-805d5877572c)
 
 
-Enable Enable SCIM provisioning
+Enable SCIM provisioning.
 
 The full SAML settings configuration as shown below.
 
