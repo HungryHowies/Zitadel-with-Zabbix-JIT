@@ -9,7 +9,7 @@ Prerequisite:
 
 Log into Zitadel instance.
 
-Click " Create New Project" and call it Zabbix, Click continue.
+Click "Create New Project" and call it Zabbix, Click continue.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/27e8b94a-6de5-403d-992f-d0fb5c786b1f)
 
