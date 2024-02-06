@@ -17,7 +17,7 @@ Under Application click "New".
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/c9490992-c424-4fba-8a1e-38c40e9feae0)
 
-Name it Zabbix then click SAML. Click continue.
+Name it Zabbix then click SAML Application. Click continue.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/a1cdba83-7270-4072-aa8b-5deb10d4c4c5)
 
