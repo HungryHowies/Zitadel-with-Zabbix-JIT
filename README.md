@@ -22,7 +22,11 @@ Click "Create New Project" and set the project name, Click continue.
 Under Application click "New".
 
 
-Name the Application, choose the SAML Application (zabbix). Click continue.
+There are two naming procedures.
+
+1. Name the Application
+
+2. Choose the SAML Application then name it (zabbix). Click continue.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/dd0b4fc2-2b6b-4b32-94e2-db4c2ab9024a)
 
