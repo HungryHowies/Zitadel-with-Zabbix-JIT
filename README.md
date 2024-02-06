@@ -4,6 +4,7 @@ Prerequisite:
   * Latest Version of Zabbix Server with HTTPS
   * Zitadel-2.42.11 Self-Hosting with HTTPS
   * Ubuntu 22.0.4
+  * Nginx Proxy
     
 # Project and Application
 
