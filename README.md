@@ -136,9 +136,9 @@ Enable JIT provisioning
 ```
 The following SAML Settings needs to be configured.
 ```
-IdP entity ID: https://zitadel-build.hungry-howard.com/saml/v2/metadata
-SSO service URL: https://zitadel-build.hungry-howard.com/saml/v2/SSO
-SLO service URL: https://zitadel-build.hungry-howard.com/saml/v2/SLO
+IdP entity ID: https://zitadel-build.domain.com/saml/v2/metadata
+SSO service URL: https://zitadel-build.domain.com/saml/v2/SSO
+SLO service URL: https://zitadel-build.domain.com/saml/v2/SLO
 Username attribute: UserName
 SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic ( Matches Zitadel XML)
 ```
