@@ -83,7 +83,12 @@ https://zitadel.com/saml/v2/metadata.
 The certificate needed is  the third one from the top.
 
 Copy the certificate and place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
-Add -----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- in the file shown below.
+
+Add the following  in idp.crt file.
+
+-----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- 
+
+As shown below.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/7c8ba6c3-c913-4936-aed7-1164d8ef20a6)
 
