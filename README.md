@@ -1,8 +1,8 @@
 # Zitadel-with-Zabbix-JIT-(Just-In-Time)
 
 Prerequisite:
-  * Latest Version of Zabbix Server and using HTTPS
-  * Zitadel-2.42.11 Self-Hosting and using HTTPS
+  * Latest Version of Zabbix Server with HTTPS
+  * Zitadel-2.42.11 Self-Hosting with HTTPS
   * Ubuntu 22.0.4
     
 # Project and Application
