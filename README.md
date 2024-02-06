@@ -84,7 +84,7 @@ The certificate needed is  the third one from the top.
 
 # Zabbix Setup
 
-Copy the certificate and place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
+Copy the certificate from Zitadel and place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
 
 Add the following  in idp.crt file.
 
