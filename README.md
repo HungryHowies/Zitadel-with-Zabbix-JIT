@@ -88,7 +88,7 @@ Copy the certificate from Zitadel and place it in a file called idp.crt in zabbi
 
 Add the following  in idp.crt file.
 
------BEGIN CERTIFICATE----- and -----END CERTIFICATE------- 
+``` -----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- ```
 
 As shown below.
 
@@ -101,6 +101,7 @@ Edit Zabbix file called zabbix.conf.php.
 ```
 vi /etc/zabbix/web/zabbix.conf.php
 ```
+
 I used certificates created from Lets encrypt (In my testing phase) for Zabbix php file. Bottom of the file,
 uncomment the last 4 lines and add the full path to all three certificates.
 
@@ -120,6 +121,7 @@ $SSO['SP_CERT'] = '/etc/zabbix/web/privkey.crt';
 $SSO['IDP_CERT'] = '/etc/zabbix/web/idp.crt';
 $SSO['SETTINGS'] = [];
 ```
+
 # Zabbix Web UI
 
 Login Zabbix  Web UI and navigate to Users --> Authentication.
@@ -136,7 +138,9 @@ Under the SAML settings, click the following tic boxes
 Enable SAML authentication
 Enable JIT provisioning
 ```
+
 The following SAML Settings needs to be configured.
+
 ```
 IdP entity ID: https://zitadel-build.domain.com/saml/v2/metadata
 SSO service URL: https://zitadel-build.domain.com/saml/v2/SSO
@@ -144,8 +148,10 @@ SLO service URL: https://zitadel-build.domain.com/saml/v2/SLO
 Username attribute: UserName
 SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic ( Matches Zitadel XML)
 ```
+
 Click the tic box Configure JIT provisioning.
 Edit these settings.
+
 ```
 Group name attribute: groups
 User name attribute: firstName
@@ -168,6 +174,9 @@ The full SAML settings configuration as shown below.
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/b6a976a5-7e1f-40db-90a5-4eb7abec8dca)
 
 
+You ushould see  the link to SSO.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/0dbae658-59e9-4f39-8748-fe145b2a20ab)
 
 
 
