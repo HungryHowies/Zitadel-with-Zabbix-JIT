@@ -76,6 +76,7 @@ for Project on Authentication".
 
 Using the end point /saml/v2/metadata/ and place it on the end of Zitadel server name.
 Example: 
+
 ```
 https://zitadel.com/saml/v2/metadata.
 ```
@@ -86,13 +87,16 @@ Add -----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- in the file show
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/7c8ba6c3-c913-4936-aed7-1164d8ef20a6)
 
-Save close.
+Save the file.
+
 Edit Zabbix file called zabbix.conf.php.
+
 ```
 vi /etc/zabbix/web/zabbix.conf.php
 ```
-I used certificates created from Lets encrypt (testing) for Zabbix php file. Bottom of the file,
+I used certificates created from Lets encrypt (In my testing phase) for Zabbix php file. Bottom of the file,
 uncomment the last 4 lines and add the full path to all three certificates.
+
 All three certificates can be in the directory /etc/zabbix/web/ so long as the full path is configured
 and Zabbix can access them, any directory would work.
 
