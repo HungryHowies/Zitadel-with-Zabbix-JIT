@@ -36,28 +36,49 @@ Click the Application called Zabbix.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/224eab2c-4aa2-46da-88db-5e46109b60ea)
 
-# SAML CONFIGURATION
+# Create a XML file.
 
-Using Option #3
+NOTE: The key points for the XML file are:
 
-Entity ID
+
+* entityID="zabbix"
+* oasis:names:tc:SAML:2.0:attrname-format:basic (NameIDFormat)
+* Location="https://zabbix.domain.com/index.php" (SingleLogoutService)
+* Location="https://zabbix.domain.com/index_sso.php?acs (AssertionConsumerService)
+
+Open a text file and place the following in it, The example below replace domain.com with your Zabbix instance.
 
 ```
-https://zabbix.domain.com
+<?xml version="1.0"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                    entityID="zabbix">
+    <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true"
+                    protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                    Location="https://zabbix.domain.com/index.php" />
+<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:attrnameformat:
+                    basic</md:NameIDFormat>
+<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTPPOST"
+                    Location="https://zabbix.domain.com/index_sso.php?acs"
+index="1" />
+   </md:SPSSODescriptor>
+</md:EntityDescriptor>
 ```
 
-ACS endpoint URL
+Save the file as xml.
 
-```
-https://zabbix.domain.com/index_sso.php?acs
-```
+Upload XML file for zabbix.
 
-Results:
-
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/2305aea0-6b13-4d8a-9790-f8798e7763b8)
-
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/34f3abb4-a366-4dc5-bb81-ef145bd59f14)
 
 Click save.
+
+Option #3 can be used but the XML file shown in the display needs the SingleLogoutService added.
+Example:
+```
+<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                    Location="https://zabbix.domain.com/index.php" />
+```
 
 Under the Zabbix Application, click the tic box called "Assert Roles on Authentication" and "Check
 for Project on Authentication".
@@ -131,7 +152,6 @@ IdP entity ID: https://zitadel-build.domain.com/saml/v2/metadata
 SSO service URL: https://zitadel-build.domain.com/saml/v2/SSO
 SLO service URL: https://zitadel-build.domain.com/saml/v2/SLO
 Username attribute: UserName
-SP entity ID: https://zabbix.domain.com
 SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic ( Matches Zitadel XML)
 ```
 
@@ -165,8 +185,7 @@ Ensure the tic box is enabled for SCIM provisioning.
 
 The full SAML settings configuration as shown below.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/d392c191-deb8-4c18-974f-d266266db8da)
-
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/65909247-2e64-49c2-9af7-c261e306ad75)
 
 
 
