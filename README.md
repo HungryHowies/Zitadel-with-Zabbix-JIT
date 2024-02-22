@@ -50,19 +50,12 @@ Open a text file and place the following in it, The example below replace domain
 
 ```
 <?xml version="1.0"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
-                    entityID="zabbix">
-    <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true"
-                    protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
-<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                    Location="https://zabbix.domain.com/index.php" />
-<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:attrnameformat:
-                    basic</md:NameIDFormat>
-<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTPPOST"
-                    Location="https://zabbix.domain.com/index_sso.php?acs"
-index="1" />
-   </md:SPSSODescriptor>
-</md:EntityDescriptor>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://zabbix.domain.com.com">
+    <<md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol">
+    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"Location="https://zabbix.domain.com/index.php" />
+<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:attrnameformat:basic</md:NameIDFormat>
+		<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTPPOST" Location="https://zabbix.domain.com/index_sso.php?acs"index="0"/>
+</md:SPSSODescriptor>
 ```
 
 Save the file as xml.
