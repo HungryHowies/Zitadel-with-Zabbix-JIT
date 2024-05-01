@@ -98,8 +98,6 @@ Ensure the following configuration is in idp.crt file.
 
 ``` -----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- ```
 
-As shown below.
-
 
 
 Once completed save the file and exit.
