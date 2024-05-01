@@ -75,7 +75,8 @@ for Project on Authentication".
 
 The SAML Metadata is located within the issuer domain. This would give us $CUSTOM-DOMAIN/saml/v2/metadata.
 
-Using the end point /saml/v2/metadata/ and place it on the end of Zitadel server name.
+once using  Zitadel metadata  end point */saml/v2/metadata/* and place it on the end of Zitadel server URL.
+
 Example: 
 
 ```
