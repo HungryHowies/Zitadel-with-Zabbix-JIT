@@ -5,7 +5,6 @@ Overview:
 
 This documentation shows How-To setup Zitadel and Zabbix for JIT (Just in Time). This is a basic demonstration of settings that are needed. More settings could be configured for a Production environment.
 
-**NOTE:**  There is a issue with Zabbix using SAML with Nginx as a remote proxy. Zabbix's  Assertion Consumer URL  *<path_to_zabbix_ui>/index_sso.php?acs* the end point will get striped and only show *index_sso.php*.  The fix will be explain in this documentation below.
 
 Prerequisite:
   * Latest Version of Zabbix Server with HTTPS
@@ -133,26 +132,6 @@ $SSO['IDP_CERT'] = '/etc/zabbix/web/idp.crt';
 $SSO['SETTINGS'] = [];
 ```
 
-### Zabbix with a Remote Nginx Proxy
-
-Edit the following Zabbix file.
-
-```
-vi /etc/zabbix/web/zabbix.conf.php
-```
-
-Configure the following lines as shown below.
-
-```
-// Used for SAML authentication.
-// Uncomment to override the default paths to SP private key, SP and IdP X.509 certificates, and to set
-extra settings.
-//$SSO['SP_KEY'] = '';
-//$SSO['SP_CERT'] = '';
-$SSO['IDP_CERT'] = '/etc/zabbix/web/idp.crt';
-$SSO['SETTINGS'] = [];
-```
-Save and exit file. 
 
 Edit the following file. This will prevent zabbix removing ACS endpoint during the session.
 
