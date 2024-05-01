@@ -74,6 +74,7 @@ for Project on Authentication".
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/02891aa2-3b9c-42c3-a473-c7c924870d8c)
 
 
+The SAML Metadata is located within the issuer domain. This would give us $CUSTOM-DOMAIN/saml/v2/metadata.
 
 Using the end point /saml/v2/metadata/ and place it on the end of Zitadel server name.
 Example: 
