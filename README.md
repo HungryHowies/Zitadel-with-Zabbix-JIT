@@ -100,7 +100,7 @@ Ensure the following configuration is in idp.crt file.
 
 As shown below.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/3108bcb1-5097-4c28-ae99-5e4ea1fa1622)
+
 
 Once completed save the file and exit.
 
