@@ -104,7 +104,7 @@ As shown below.
 
 Once completed save the file and exit.
 
-**NOTE:** This section is for Nginx on the same server as Zabbix server.  If your using a remote Proxy skip this section and go [here](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/?tab=readme-ov-file#zabbix-with-a-remote-nginx-proxy).
+
  
 ### Edit Zabbix file  zabbix.conf.php.
 
