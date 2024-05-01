@@ -231,7 +231,8 @@ Ensure the tic box is enabled for SCIM provisioning.
 
 The full SAML settings configuration as shown below.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/65909247-2e64-49c2-9af7-c261e306ad75)
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/6da12862-c945-45c0-a857-ff876ec08e0f)
+
 
 
 
