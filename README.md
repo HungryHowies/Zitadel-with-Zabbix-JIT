@@ -5,6 +5,8 @@ Overview:
 
 This documentation shows How-To setup Zitadel and Zabbix for JIT (Just in Time). This is a basic demonstration of settings that are needed. More settings could be configured for a Production environment.
 
+**NOTE:**  There is a issue with Zabbix using SAML with Nginx as a remote proxy. Zabbix's  Assertion Consumer URL  *<path_to_zabbix_ui>/index_sso.php?acs* the end point will get striped and only show *index_sso.php*.  The fix will be explain in this documentation below.
+
 Prerequisite:
   * Latest Version of Zabbix Server with HTTPS
   * Zitadel-2.42.11 Self-Hosting with HTTPS
@@ -38,43 +40,39 @@ Click the Application called Zabbix.
 
 # Create a XML file.
 
-NOTE: The key points for the XML file are:
-
-
-* entityID="zabbix"
-* oasis:names:tc:SAML:2.0:attrname-format:basic (NameIDFormat)
-* Location="https://zabbix.domain.com/index.php" (SingleLogoutService)
-* Location="https://zabbix.domain.com/index_sso.php?acs (AssertionConsumerService)
-
-Open a text file and place the following in it, The example below replace domain.com with your Zabbix instance.
+Open a text file and place the following in it, The following steps are using a place holder called  **https://zabbix.domain.com**. 
+The example below replace it by a FQDN or IP Address of the Zabbix-server.
 
 ```
 <?xml version="1.0"?>
-<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://zabbix.domain.com.com">
-    <<md:SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol urn:oasis:names:tc:SAML:1.1:protocol">
-    <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"Location="https://zabbix.domain.com/index.php" />
-<md:NameIDFormat>urn:oasis:names:tc:SAML:2.0:attrnameformat:basic</md:NameIDFormat>
-		<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTPPOST" Location="https://zabbix.domain.com/index_sso.php?acs"index="0"/>
-</md:SPSSODescriptor>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+                     validUntil="2023-10-26T03:08:08Z"
+                     cacheDuration="PT604800S"
+                     entityID="https://zabbix.domain.com/">
+    <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+        <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
+                                Location="https://zabbix.domain.com/index.php" />
+        <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+        <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+                                     Location="https://zabbix.domain.com/index_sso.php?acs" index="1" />
+        
+    </md:SPSSODescriptor>
+</md:EntityDescriptor>
 ```
 
 Save the file as xml.
 
-Upload XML file for zabbix.
+Now upload XML file into Zitadel.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/34f3abb4-a366-4dc5-bb81-ef145bd59f14)
 
 Click save.
 
-Option #3 can be used but the XML file shown in the display needs the SingleLogoutService added.
-Example:
-```
-<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                    Location="https://zabbix.domain.com/index.php" />
-```
-
 Under the Zabbix Application, click the tic box called "Assert Roles on Authentication" and "Check
 for Project on Authentication".
+
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/02891aa2-3b9c-42c3-a473-c7c924870d8c)
+
 
 
 Using the end point /saml/v2/metadata/ and place it on the end of Zitadel server name.
@@ -83,27 +81,36 @@ Example:
 ```
 https://zitadel.com/saml/v2/metadata.
 ```
-Copy the certificate from the /saml/v2/metadata/. In this example I used the third one from the top.
+Copy the certificate from the /saml/v2/metadata/. In this example I used the third one from the top. This will be used for Zabbix idp.crt file.
 
 # Zabbix Setup
 
 Once the certificate is copied from Zitadel, then place it in a file called idp.crt in zabbix-server directory /etc/zabbix/web/.
 
-ensure the following configuration is in idp.crt file.
+Example:
+
+```
+vi /etc/zabbix/web/idp.crt
+```
+
+Ensure the following configuration is in idp.crt file.
 
 ``` -----BEGIN CERTIFICATE----- and -----END CERTIFICATE------- ```
 
 As shown below.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/7c8ba6c3-c913-4936-aed7-1164d8ef20a6)
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/3108bcb1-5097-4c28-ae99-5e4ea1fa1622)
 
-Save the file.
+Once completed save the file and exit.
 
-Edit Zabbix file called zabbix.conf.php.
+**NOTE:** This section is for Nginx on the same server as Zabbix sserver.  If your using a remote Proxy skip this section and go [here](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/edit/main/README.md#zabbix-with-a-remote-nginx-proxy).
+ 
+### Edit Zabbix file  zabbix.conf.php.
 
 ```
 vi /etc/zabbix/web/zabbix.conf.php
 ```
+
 
 I used certificates created from Lets encrypt (In my testing phase) for Zabbix php file. Bottom of the file,
 uncomment the last 4 lines and add the full path to all three certificates.
@@ -125,13 +132,59 @@ $SSO['IDP_CERT'] = '/etc/zabbix/web/idp.crt';
 $SSO['SETTINGS'] = [];
 ```
 
+### Zabbix with a Remote Nginx Proxy
+
+Edit the following Zabbix file.
+
+```
+vi /etc/zabbix/web/zabbix.conf.php
+```
+
+Configure the following lines as shown below.
+
+```
+// Used for SAML authentication.
+// Uncomment to override the default paths to SP private key, SP and IdP X.509 certificates, and to set
+extra settings.
+//$SSO['SP_KEY'] = '';
+//$SSO['SP_CERT'] = '';
+$SSO['IDP_CERT'] = '/etc/zabbix/web/idp.crt';
+$SSO['SETTINGS'] = [];
+```
+Save and exit file. 
+
+Edit the following file. This will prevent zabbix removing ACS endpoint during the session.
+
+```
+vi /usr/share/zabbix/vendor/onelogin/php-saml/src/Saml2/Utils.php
+```
+Change the following line from this…
+
+```
+private static $_proxyVars = false;
+```
+To this…
+
+```
+private static $_proxyVars = true;
+```
+Save and exit file. At this point  restart Zabbix service.
+
+```
+systemctl restart zabbix-server
+```
+
+
 # Zabbix Web UI
 
-Login Zabbix  Web UI and navigate to Users --> Authentication.
+Login Zabbix Web UI and navigate to Users --> Authentication.
 
 The Authentication section, disable "Deprovisioned users group".
 
-Click the "SAML settings",then enable following tic boxes.
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/73055e67-f88a-4ebd-bce4-f937aa0b5425)
+
+
+Click the "SAML settings" tab,then enable following tic boxes.
 
 ```
 Enable SAML authentication
@@ -141,11 +194,11 @@ Enable JIT provisioning
 Configure the following settings section.
 
 ```
-IdP entity ID: https://zitadel-build.domain.com/saml/v2/metadata
-SSO service URL: https://zitadel-build.domain.com/saml/v2/SSO
-SLO service URL: https://zitadel-build.domain.com/saml/v2/SLO
-Username attribute: UserName
-SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic ( Matches Zitadel XML)
+IdP entity ID: https://zitadel.domain.com/saml/v2/metadata
+SSO service URL: https://zitadel.domain.com/saml/v2/SSO
+SLO service URL: https://zitadel.domain.com/saml/v2/SLO
+Username attribute: Email (I tried *UserName* but Zitadel does not have the users attribute)
+SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic 
 ```
 
 Click the tic box "Configure JIT provisioning".
