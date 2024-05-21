@@ -37,6 +37,7 @@ Click the Application called Zabbix.
 
 ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/224eab2c-4aa2-46da-88db-5e46109b60ea)
 
+
 # Create a XML file.
 
 Open a text file and place the following in it, The following steps are using a place holder called  **https://zabbix.domain.com**. 
@@ -184,32 +185,77 @@ Click the tic box "Configure JIT provisioning".
 Edit these settings as shown.
 
 ```
-Group name attribute: groups
-User name attribute: firstName
+Group name attribute: zabbix
+User name attribute: userName
 User last name attribute: lastName
 ```
-
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/0012bde0-3bb3-4ced-92d3-e4b9b124194f)
-
-# User group mapping.
-
-I used a wildcard in place of the User Group Mapping. At this point I havent found a way to add group/s to Zitadel to match this setting.
-
-Click the Add button under "User group mapping". The following example of these settings are shown below.
-
-```
-SAML group pattern: *
-User groups: Zabbix administrators
-User role: Super admin role
-```
-
-Click "Add" to save settings.
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/d33ccaa0-8e17-4a58-91ae-5dd96619dbaf)
 
 Ensure the tic box is enabled for SCIM provisioning.
 
-The full SAML settings configuration as shown below.
+# User group mapping.
 
-![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/6da12862-c945-45c0-a857-ff876ec08e0f)
+In this section we are matching *Group name attribute* && *SAML group pattern*  with Zitadel users metadata.
+
+*Group name attribute* is called zabbix. Under Zitadel users metadata this is called *key*
+
+The *SAML group patterns* called admin (full access) and reader ( guest group & roles). Under Zitadel users metadata this is called Value.
+
+Login to Zitadel and add users to the Project under AUTHORIZATIONS section.
+
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/447bebfe-7001-4f21-bc25-ea8b9a3c2e1d)
+
+Configure metadata for each user/s. 
+Click on the user that has AUTHORIZATIONS for that project. On the left pane you should see Metadata section. This should match the configures in Goup mappings.
+ 
+ Example:
+ 
+ ![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/8db89bd0-eed8-49c6-9266-4162e3e2c4a0)
+
+Click Save.
+
+# Create a zitadel action.
+
+Createa a Zitadel action to send the user metadata with the SAML responce.
+Under the Action tab, navigate to the Script section and click the button called "New"
+and apply this JavaScript. Copy and Paste.
+
+```
+/**
+ * Add an custom attribute(s) to the SAMLResponse by pulling the value from 
+ * metadata added to the user config.
+ *
+ * Flow: Complement SAMLResponse, Triggers: Pre SAMLResponse creation
+ *
+ * @param ctx
+ * @param api
+ */
+function setCustomAttribute(ctx, api) {
+    const user = ctx.v1.getUser()
+    let metadata = ctx.v1.user.getMetadata()
+        if (metadata === undefined || metadata.count == 0) {
+        return
+    }
+    metadata.metadata.forEach(md => {
+        api.v1.attributes.setCustomAttribute(md.key,'', md.value);
+    })
+}
+```
+Click Save.
+
+Now create a Flow, this is below the Script section. Drop down  choose *Complement SAMLResponse*. Click *Add trigger* button.
+Choose Trigger Type *Pre SAMLResponse creation*
+Action, choose the script name created *setCustomAttribute*
+
+Click save.
+
+Example:
+
+![image](https://github.com/HungryHowies/Zitadel-with-Zabbix-JIT/assets/22652276/5162bc8b-b823-4749-85da-7c0eff3d3b84)
+
+
+
+ 
 
 
 
