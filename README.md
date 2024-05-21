@@ -176,8 +176,8 @@ Configure the following settings section.
 IdP entity ID: https://zitadel.domain.com/saml/v2/metadata
 SSO service URL: https://zitadel.domain.com/saml/v2/SSO
 SLO service URL: https://zitadel.domain.com/saml/v2/SLO
-Username attribute: Email (I tried *UserName* but Zitadel does not have the users attribute)
-SP name ID format: urn:oasis:names:tc:SAML:2.0:attrname-format:basic 
+Username attribute: UserName
+SP name ID format: urn:oasis:names:tc:SAML:2.0:nameid-format:unspecified
 ```
 
 Click the tic box "Configure JIT provisioning".
