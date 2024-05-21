@@ -243,8 +243,10 @@ function setCustomAttribute(ctx, api) {
 ```
 Click Save.
 
-Now create a Flow, this is below the Script section. Drop down  choose *Complement SAMLResponse*. Click *Add trigger* button.
+Now create a Flow, this is below the Script section. The drop down, choose *Complement SAMLResponse* then click  *Add trigger* button.
+
 Choose Trigger Type *Pre SAMLResponse creation*
+
 Action, choose the script name created *setCustomAttribute*
 
 Click save.
